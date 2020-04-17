@@ -50,10 +50,10 @@ module JSONTranslate
         translation_store = "#{attr_name}#{SUFFIX}"
         translations = public_send(translation_store) || {}
         public_send("#{translation_store}_will_change!") unless translations[locale.to_s] == value
-        if value
-          translations[locale.to_s] = value
-        else
+        if value.nil?
           translations.delete(locale.to_s)
+        else
+          translations[locale.to_s] = value
         end
         public_send("#{translation_store}=", translations)
         value
